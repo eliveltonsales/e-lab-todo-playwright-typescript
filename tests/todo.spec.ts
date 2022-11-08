@@ -1,6 +1,7 @@
 import test, {
     expect
 } from "@playwright/test";
+import { url } from "../data/data";
 import {
     LoginPage
 } from "../pages/Login.page";
@@ -15,7 +16,7 @@ test.describe('Regressive Todo', () => {
     test.beforeEach(async ({
         page
     }) => {
-        await page.goto('localhost:8081/login.php', {
+        await page.goto(url, {
             timeout: 12000
         })
         const loginPage = new LoginPage(page)
