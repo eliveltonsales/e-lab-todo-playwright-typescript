@@ -45,4 +45,12 @@ test.describe('Regressive Todo', () => {
         await todoPage.createTask(1)
         expect(await todoPage.setTaskAsDone()).toBeGreaterThan(0)
     })
+
+    test('should clear task input when a task is added', async({
+        page
+    })=> {
+        const todoPage = new TodoPage(page)
+        await todoPage.createTask(1)
+        expect(await todoPage.txtTask.innerText()).toBe('')
+    })
 })
