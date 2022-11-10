@@ -53,4 +53,13 @@ test.describe('Regressive Todo', () => {
         await todoPage.createTask(1)
         expect(await todoPage.txtTask.innerText()).toBe('')
     })
+
+    test('should filter completed tasks',async({
+        page
+    })=>{
+        const todoPage = new TodoPage(page)
+        await todoPage.createTask(3)
+        await todoPage.setTaskAsDone()        
+        expect(await todoPage.filterComplete(3)).toBeTruthy()
+    })
 })
