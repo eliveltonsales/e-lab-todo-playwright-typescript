@@ -20,8 +20,8 @@ export class TodoPage {
         this.btnDone = page.locator('.btnDone')
         this.btnDelete = page.locator('.btnDelete')
         this.txtTask = page.locator('#txtTask')
-        this.taskItem = page.locator('.todo')
-        this.taskCompleted = page.locator('.todo.completed')
+        this.taskItem = page.locator('.todo:visible')
+        this.taskCompleted = page.locator('.todo.completed')        
     }
 
     async createTask(taskCount: number) {
@@ -42,14 +42,25 @@ export class TodoPage {
         return await this.btnDelete.count()
     }
 
-    async setTaskAsDone() {
-        await this.btnDone.first().click()
+    async setTaskAsDone(taskCount: number) {
+        for (let index=0; index < taskCount; index++){
+            await this.btnDone.nth(index).click()    
+        }
+        
         return await this.page.locator('.completed').count()
     }
 
-    async filterComplete(taskCount: number){
+    async filterComplete(taskCount: number){        
         await this.cboFilter.selectOption("Done")
         await this.cboFilter.dblclick()
         return await this.taskCompleted.count() < taskCount
+    }
+
+    async filterIncomplete(){
+        await this.cboFilter.selectOption("To Do")
+        await this.cboFilter.dblclick()
+        console.log(await this.taskItem.count())
+        console.log(await this.taskCompleted.count())
+        return await this.taskItem.count() < await this.taskCompleted.count()
     }
 }

@@ -43,7 +43,7 @@ test.describe('Regressive Todo', () => {
     }) => {
         const todoPage = new TodoPage(page)
         await todoPage.createTask(1)
-        expect(await todoPage.setTaskAsDone()).toBeGreaterThan(0)
+        expect(await todoPage.setTaskAsDone(1)).toBeGreaterThan(0)
     })
 
     test('should clear task input when a task is added', async({
@@ -59,7 +59,16 @@ test.describe('Regressive Todo', () => {
     })=>{
         const todoPage = new TodoPage(page)
         await todoPage.createTask(3)
-        await todoPage.setTaskAsDone()        
+        await todoPage.setTaskAsDone(1)
         expect(await todoPage.filterComplete(3)).toBeTruthy()
+    })
+
+    test('should filter incomplete tasks',async({
+        page
+    })=>{
+        const todoPage = new TodoPage(page)
+        await todoPage.createTask(3)
+        await todoPage.setTaskAsDone(2)
+        expect(await todoPage.filterIncomplete()).toBeTruthy()
     })
 })
