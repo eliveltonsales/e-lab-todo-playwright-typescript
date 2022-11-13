@@ -59,8 +59,6 @@ export class TodoPage {
     async filterIncomplete(){
         await this.cboFilter.selectOption("To Do")
         await this.cboFilter.dblclick()
-        console.log(await this.taskItem.count())
-        console.log(await this.taskCompleted.count())
         return await this.taskItem.count() < await this.taskCompleted.count()
     }
 }
