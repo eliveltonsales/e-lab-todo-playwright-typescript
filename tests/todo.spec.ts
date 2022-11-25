@@ -71,4 +71,11 @@ test.describe('Regressive Todo', () => {
         await todoPage.setTaskAsDone(2)
         expect(await todoPage.filterIncomplete()).toBeTruthy()
     })
+
+    test('should display warning and block empty tasks', async({
+        page
+    })=>{
+        const todoPage = new TodoPage(page)
+        expect(await todoPage.getBlockMessage()).toMatch("Task input can't be empty.")
+    })
 })

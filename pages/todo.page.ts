@@ -12,6 +12,7 @@ export class TodoPage {
     readonly txtTask: Locator
     readonly taskItem: Locator
     readonly taskCompleted: Locator
+    readonly toastMessage: Locator
 
     constructor(page: Page) {
         this.page = page;
@@ -21,7 +22,8 @@ export class TodoPage {
         this.btnDelete = page.locator('.btnDelete')
         this.txtTask = page.locator('#txtTask')
         this.taskItem = page.locator('.todo:visible')
-        this.taskCompleted = page.locator('.todo.completed')        
+        this.taskCompleted = page.locator('.todo.completed')
+        this.toastMessage = page.locator('.toast')        
     }
 
     async createTask(taskCount: number) {
@@ -60,5 +62,10 @@ export class TodoPage {
         await this.cboFilter.selectOption("To Do")
         await this.cboFilter.dblclick()
         return await this.taskItem.count() < await this.taskCompleted.count()
+    }
+
+    async getBlockMessage(){
+        await this.btnAdd.click()
+        return await this.toastMessage.textContent()
     }
 }
